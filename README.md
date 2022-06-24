@@ -1,4 +1,4 @@
-# react-barrels ��
+# react-barrels 🥃
 
 Easily convert or create your React/Typescript component files to a barrel file structure.
 
@@ -21,28 +21,49 @@ Easily convert or create your React/Typescript component files to a barrel file 
 
 ## Extension Settings
 
-// TODO
+// NOT IMPLEMENTED YET
+
+```
+{
+  language: "typescript" | "javascript"
+  reactStyle: "functional" | "const" | "class"
+  styling: "css" | "scss" | "sass" | "none"
+  stories: "csf" | "mdx" | "none"
+  tests: "test" | "spec" | "none"
+  semiColons: boolean
+}
+```
 
 ## Todos
 
-- [ ] Support Javascript components
-- [ ] Support class components
-- [ ] Convert callbacks to promises
-- [ ] Format the code properly in separate files/functions (the irony ��)
+- [x] Support Javascript components
+- [x] Support class components
+- [x] Convert callbacks to promises
+- [x] Refactor `createBarrel`
+- [ ] Create `MyComponent.test.ts` default templates
+- [ ] Create `MyComponent.stories.tsx` default templates
+- [ ] Refactor `convertToBarrel`
+- [ ] Enable extension configuration
+- [ ] Barrel creation/convertion prompts
 - [ ] Tests maybe?
 - [ ] Automatically parse and export typescript definitions?
 - [ ] Release on marketplace
 
 ## Known Issues
 
-// unknown support for linux and macos
-// no rollback yet if an error occurs
-// messy code ��
+// unknown support for Linux and MacOS
+// messy code 🍝
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.2
+
+- Refactored `createBarrel` command.
+- Refactored file content generation utils.
+- Defined extension settings.
+- Added support for Javascript.
+- Added support for React class components.
 
 ### 0.0.1
 
-Create and convert React/Typescript components
+- Create and convert React/Typescript components.

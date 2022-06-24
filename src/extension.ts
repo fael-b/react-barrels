@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode"
 import fs = require("fs")
+import createBarrel from "./createBarrel"
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -10,106 +11,12 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log("react-barrels is now active.")
 
-  let createBarrel = vscode.commands.registerCommand(
+  let createBarrelCommand = vscode.commands.registerCommand(
     "react-barrels.createBarrel",
-    async ({ path }) => {
-      if (!path) {
-        return vscode.window.showErrorMessage(
-          "Error while creating barrel: no path provided"
-        )
-      }
-      const componentName = (
-        await vscode.window.showInputBox({
-          prompt: "Enter the name of the React component",
-          title: "Create a React component barrel",
-        })
-      )?.trim()
-
-      if (!componentName) {
-        return vscode.window.showErrorMessage(
-          "Error while creating barrel: no component name provided"
-        )
-      }
-
-      // Fix the barrel path
-      let barrelPath = path as string
-      if (barrelPath.startsWith("/") || barrelPath.startsWith("\\")) {
-        barrelPath = barrelPath.substring(1)
-      }
-      barrelPath += `/${componentName}`
-
-      // Create parent barrel directory
-      fs.mkdir(barrelPath, (err) => {
-        if (err) {
-          return vscode.window.showErrorMessage(
-            "Error while creating barrel: " + err.message
-          )
-        }
-
-        // Create index file
-        fs.writeFile(
-          `${barrelPath}/index.ts`,
-          `import ${componentName} from "./${componentName}"
-
-export default ${componentName}
-export type { ${componentName}Props } from "./${componentName}.types"`,
-          (err) => {
-            if (err) {
-              return vscode.window.showErrorMessage(
-                "Error while creating barrel index file: " + err.message
-              )
-            }
-
-            // Create types file
-            fs.writeFile(
-              `${barrelPath}/${componentName}.types.ts`,
-              `export interface ${componentName}Props {}`,
-              (err) => {
-                if (err) {
-                  return vscode.window.showErrorMessage(
-                    "Error while creating barrel types file: " + err.message
-                  )
-                }
-
-                // Create component file
-                fs.writeFile(
-                  `${barrelPath}/${componentName}.tsx`,
-                  `import { ${componentName}Props } from "./${componentName}.types"
-
-export default function ${componentName}({}: ${componentName}Props) {
-	return <div>${componentName}</div>
-}`,
-                  (err) => {
-                    if (err) {
-                      return vscode.window.showErrorMessage(
-                        "Error while creating barrel component file: " +
-                          err.message
-                      )
-                    }
-
-                    // Open component file
-                    vscode.window
-                      .showTextDocument(
-                        vscode.Uri.parse(
-                          `file:///${barrelPath}/${componentName}.tsx`
-                        )
-                      )
-                      .then(() => {
-                        return vscode.window.showInformationMessage(
-                          `Created component barrel ${componentName} successfully.`
-                        )
-                      })
-                  }
-                )
-              }
-            )
-          }
-        )
-      })
-    }
+    createBarrel
   )
 
-  context.subscriptions.push(createBarrel)
+  context.subscriptions.push(createBarrelCommand)
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand

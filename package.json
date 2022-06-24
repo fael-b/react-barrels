@@ -2,7 +2,7 @@
   "name": "react-barrels",
   "displayName": "react-barrels",
   "description": "Converts `MyComponent.tsx` to a barrel folder structure (MyComponent\\index.ts, MyComponent\\MyComponent.tsx, MyComponent\\MyComponent.types.ts, ...)",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Fael",
     "url": "https://github.com/fael-b"
